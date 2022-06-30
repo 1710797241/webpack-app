@@ -76,6 +76,9 @@ module.exports = {
             template: 'public/index.html',
         }),
         new WebpackManifestPlugin(),
+        new webpack.ProvidePlugin({
+            _: 'lodash',
+        }),
     ],
     module: {
         rules: [
