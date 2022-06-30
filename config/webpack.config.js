@@ -1,19 +1,27 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 console.log('out', path.resolve(__dirname, '../dist'));
 module.exports = {
     entry: {
         index: './src/index.js',
         mobile: './src/mobile.js',
     },
+    mode: 'development',
+    devtool: 'source-map', //inline-source-map
     output: {
         path: path.resolve(__dirname, '../dist'),
+        clean: true, //  new CleanWebpackPlugin()功能一样
+        // filename: '[name].bundle.js',
     },
-
+    devServer: {
+        static: '../dist',
+    },
+    optimization: {
+        runtimeChunk: 'single',
+    },
     plugins: [
-        new CleanWebpackPlugin(),
-
         new HtmlWebpackPlugin({
             chunks: ['index'],
             filename: 'index.html',
@@ -27,6 +35,7 @@ module.exports = {
             title: 'mobile template',
             template: 'public/index.html',
         }),
+        new WebpackManifestPlugin(),
     ],
     module: {
         rules: [
