@@ -1,5 +1,6 @@
 import './global.css';
 import './componet';
+import { cube } from './math';
 import Data from '../public/demo.json';
 // import Icon from '../assets/icon.svg';
 function getComponent() {
@@ -13,6 +14,8 @@ function getComponent() {
         })
         .catch(error => 'An error occurred while loading the component');
 }
+const a = cube(1);
+console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 
 getComponent().then(component => {
     document.body.appendChild(component);
