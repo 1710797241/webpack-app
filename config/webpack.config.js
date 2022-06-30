@@ -5,15 +5,19 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 console.log('process.env.NODE_ENV', process.env.NODE_ENV);
-
+const webpack = require('webpack');
 module.exports = env => {
     console.log('env', env);
     return {
         entry: {
             index: './src/index.js',
-            mobile: './src/mobile.js',
+            // mobile: './src/mobile.js',
+            // Runtime code for hot module replacement
+            hot: 'webpack/hot/dev-server.js',
+            // Dev server client for web socket transport, hot and live reload logic
+            client: 'webpack-dev-server/client/index.js?hot=true&live-reload=true',
         },
-        mode: 'production',
+        mode: env.production ? 'production' : 'development',
         devtool: 'eval-cheap-module-source-map', //inline-source-map source-map
         output: {
             path: path.resolve(__dirname, '../dist'),
@@ -30,6 +34,8 @@ module.exports = env => {
         },
         devServer: {
             static: '../dist',
+            hot: false,
+            client: false,
         },
 
         optimization: {
@@ -64,20 +70,21 @@ module.exports = env => {
         },
         plugins: [
             //     // new BundleAnalyzerPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
             new MiniCssExtractPlugin(),
             new HtmlWebpackPlugin({
-                chunks: ['index'],
+                // chunks: ['index'],
                 filename: 'index.html',
                 title: 'index template',
                 favicon: 'public/favicon.svg',
                 template: 'public/index.html',
             }),
-            new HtmlWebpackPlugin({
-                chunks: ['mobile'],
-                filename: 'mobile.html',
-                title: 'mobile template',
-                template: 'public/index.html',
-            }),
+            // new HtmlWebpackPlugin({
+            //     chunks: ['mobile'],
+            //     filename: 'mobile.html',
+            //     title: 'mobile template',
+            //     template: 'public/index.html',
+            // }),
             new WebpackManifestPlugin(),
         ],
         module: {

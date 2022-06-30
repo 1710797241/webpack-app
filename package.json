@@ -4,7 +4,7 @@
   "description": "",
   "private": "true",
   "scripts": {
-    "dev-server": "webpack-dev-server  --config ./config/webpack.config.js --open ",
+    "dev-server": "webpack-dev-server   --config ./config/webpack.config.js  ",
     "dev": "webpack --watch  --config ./config/webpack.config.js ",
     "build": "webpack  --config ./config/webpack.config.js ",
     "env":" webpack  --config ./config/webpack.config.js --env production --progress",
