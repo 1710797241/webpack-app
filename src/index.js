@@ -1,6 +1,7 @@
 import './global.css';
+import './componet';
 import Data from '../public/demo.json';
-import Icon from '../assets/icon.svg';
+// import Icon from '../assets/icon.svg';
 function component() {
     const element = document.createElement('div');
     return import('lodash')

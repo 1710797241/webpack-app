@@ -14,8 +14,10 @@ module.exports = {
     devtool: 'source-map', //inline-source-map
     output: {
         path: path.resolve(__dirname, '../dist'),
+
         clean: true, //  new CleanWebpackPlugin()功能一样
         // filename: '[name].bundle.js',
+        filename: '[name].[contenthash].js', //hash 避免浏览器缓存
         publicPath: '/',
     },
     devServer: {
@@ -23,36 +25,37 @@ module.exports = {
     },
 
     optimization: {
+        // moduleIds: 'deterministic',//固定vendors的id
         runtimeChunk: 'single',
-        // splitChunks: {
-        //     name: 'verndors',
-        //     chunks: 'all',
-        //     minSize: 20000,
-        //     minRemainingSize: 0,
-        //     minChunks: 1,
-        //     maxAsyncRequests: 30,
-        //     maxInitialRequests: 30,
-        //     enforceSizeThreshold: 50000,
-        //     // 所有入口代码中公共的
-        //     // cacheGroups: {
-        //     //     commons: {
-        //     //         name: 'commons',
-        //     //         chunks: 'initial',
-        //     //         minChunks: 2,
-        //     //     },
-        //     // },
-        //     // //所有node_modules
-        //     // cacheGroups: {
-        //     //     commons: {
-        //     //         test: /[\\/]node_modules[\\/]/,
-        //     //         name: 'vendors',
-        //     //         chunks: 'all',
-        //     //     },
-        //     // },
-        // },
+        splitChunks: {
+            name: 'verndors',
+            chunks: 'all',
+            minSize: 20000,
+            minRemainingSize: 0,
+            minChunks: 1,
+            maxAsyncRequests: 30,
+            maxInitialRequests: 30,
+            enforceSizeThreshold: 50000,
+            // 所有入口代码中公共的
+            // cacheGroups: {
+            //     commons: {
+            //         name: 'commons',
+            //         chunks: 'initial',
+            //         minChunks: 2,
+            //     },
+            // },
+            // //所有node_modules
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
+        },
     },
     plugins: [
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             chunks: ['index'],
