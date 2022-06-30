@@ -30,7 +30,7 @@ module.exports = {
 
     optimization: {
         // moduleIds: 'deterministic',//固定vendors的id
-        sideEffects: true,
+        sideEffects: true, //treeshaking
         runtimeChunk: true,
         splitChunks: {
             name: 'verndors',
