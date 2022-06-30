@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 console.log('out', path.resolve(__dirname, '../dist'));
 module.exports = {
     entry: {
@@ -52,6 +52,7 @@ module.exports = {
         // },
     },
     plugins: [
+        new BundleAnalyzerPlugin(),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             chunks: ['index'],
