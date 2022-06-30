@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import qs from 'qs';
 import './global.css';
 import Data from '../public/demo.json';
 import Icon from '../assets/icon.svg';

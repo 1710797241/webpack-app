@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import qs from 'qs';
 
 function component() {
     const element = document.createElement('div');
