@@ -7,3 +7,9 @@
 1.  每个模块需要单独实例化，而不是仅实例化一次
 
     `webapck.conig.js optimization: { runtimeChunk: 'single', }, `
+
+# 启动服务
+
+1.  yarn dev-server
+2.  yarn dev
+3.  yarn server
