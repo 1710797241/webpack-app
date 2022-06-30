@@ -14,6 +14,7 @@ module.exports = {
         path: path.resolve(__dirname, '../dist'),
         clean: true, //  new CleanWebpackPlugin()功能一样
         // filename: '[name].bundle.js',
+        publicPath: '/',
     },
     devServer: {
         static: '../dist',
