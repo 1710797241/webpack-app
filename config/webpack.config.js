@@ -8,7 +8,7 @@ console.log('out', path.resolve(__dirname, '../dist'));
 module.exports = {
     entry: {
         index: './src/index.js',
-        mobile: './src/mobile.js',
+        // mobile: './src/mobile.js',
     },
     mode: 'development',
     devtool: 'source-map', //inline-source-map
@@ -17,7 +17,8 @@ module.exports = {
 
         clean: true, //  new CleanWebpackPlugin()功能一样
         // filename: '[name].bundle.js',
-        filename: '[name].[contenthash].js', //hash 避免浏览器缓存
+        // filename: '[name].[contenthash].js', //hash 避免浏览器缓存
+        filename: 'webpack-numbers.js',
         publicPath: '/',
         library: {
             name: 'webpackNumbers',
