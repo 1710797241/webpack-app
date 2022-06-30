@@ -13,7 +13,7 @@ function component() {
         })
         .catch(error => 'An error occurred while loading the component');
 }
-
+a.log;
 getComponent().then(component => {
     document.body.appendChild(component);
 });
