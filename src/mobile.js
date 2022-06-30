@@ -1,13 +1,18 @@
-import _ from 'lodash';
-import qs from 'qs';
-
+import './global.css';
+import Data from '../public/demo.json';
+import Icon from '../assets/icon.svg';
 function component() {
     const element = document.createElement('div');
+    return import('lodash')
+        .then(({ default: _ }) => {
+            const element = document.createElement('div');
 
-    // Lodash, currently included via a script, is required for this line to work
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-
-    return element;
+            element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+            return element;
+        })
+        .catch(error => 'An error occurred while loading the component');
 }
 
-document.body.appendChild(component());
+getComponent().then(component => {
+    document.body.appendChild(component);
+});

@@ -24,32 +24,32 @@ module.exports = {
 
     optimization: {
         runtimeChunk: 'single',
-        splitChunks: {
-            name: 'verndors',
-            chunks: 'all',
-            minSize: 20000,
-            minRemainingSize: 0,
-            minChunks: 1,
-            maxAsyncRequests: 30,
-            maxInitialRequests: 30,
-            enforceSizeThreshold: 50000,
-            // 所有入口代码中公共的
-            cacheGroups: {
-                commons: {
-                    name: 'commons',
-                    chunks: 'initial',
-                    minChunks: 2,
-                },
-            },
-            // //所有node_modules
-            // cacheGroups: {
-            //     commons: {
-            //         test: /[\\/]node_modules[\\/]/,
-            //         name: 'vendors',
-            //         chunks: 'all',
-            //     },
-            // },
-        },
+        // splitChunks: {
+        //     name: 'verndors',
+        //     chunks: 'all',
+        //     minSize: 20000,
+        //     minRemainingSize: 0,
+        //     minChunks: 1,
+        //     maxAsyncRequests: 30,
+        //     maxInitialRequests: 30,
+        //     enforceSizeThreshold: 50000,
+        //     // 所有入口代码中公共的
+        //     // cacheGroups: {
+        //     //     commons: {
+        //     //         name: 'commons',
+        //     //         chunks: 'initial',
+        //     //         minChunks: 2,
+        //     //     },
+        //     // },
+        //     // //所有node_modules
+        //     // cacheGroups: {
+        //     //     commons: {
+        //     //         test: /[\\/]node_modules[\\/]/,
+        //     //         name: 'vendors',
+        //     //         chunks: 'all',
+        //     //     },
+        //     // },
+        // },
     },
     plugins: [
         new MiniCssExtractPlugin(),
