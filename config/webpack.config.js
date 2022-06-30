@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 console.log('out', path.resolve(__dirname, '../dist'));
 module.exports = {
     entry: {
@@ -26,6 +27,7 @@ module.exports = {
         },
     },
     plugins: [
+        new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             chunks: ['index'],
             filename: 'index.html',
@@ -45,7 +47,7 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
