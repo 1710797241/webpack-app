@@ -4,9 +4,17 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin');
+const FastRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin/lib');
+const smp = new SpeedMeasureWebpackPlugin();
 console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+const handler = (percentage, message, ...args) => {
+    // e.g. Output each progress message directly to the console:
+    console.info(percentage, message, ...args);
+};
+
 const webpack = require('webpack');
-module.exports = {
+const config = {
     entry: {
         index: './src/index.js',
         mobile: './src/mobile.js',
@@ -61,6 +69,9 @@ module.exports = {
     },
     plugins: [
         //     // new BundleAnalyzerPlugin(),
+
+        new webpack.ProgressPlugin(handler),
+        new FastRefreshPlugin(),
         new MiniCssExtractPlugin(),
         new HtmlWebpackPlugin({
             chunks: ['index'],
@@ -76,6 +87,7 @@ module.exports = {
             template: 'public/index.html',
         }),
         new WebpackManifestPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
             _: 'lodash',
         }),
@@ -97,3 +109,5 @@ module.exports = {
         ],
     },
 };
+
+module.exports = config;
