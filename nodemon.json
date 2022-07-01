@@ -1,0 +1,5 @@
+{
+  "ignore":["node_modules","dist"],
+  "watch":["config"],
+  "exec":"npm run dev-server"
+}

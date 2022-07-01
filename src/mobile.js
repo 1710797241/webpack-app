@@ -1,20 +1,10 @@
 import './global.css';
-import qs from 'qs';
-import Data from '../public/demo.json';
-import Icon from '../assets/icon.svg';
-function component() {
-    const element = document.createElement('div');
-    return import('lodash')
-        .then(({ default: _ }) => {
-            const element = document.createElement('div');
+import './componet';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+const Demo = () => {
+    return <div>react-mobile</div>;
+};
 
-            element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-            return element;
-        })
-        .catch(error => 'An error occurred while loading the component');
-}
-console.log('compfvvfonffffenfft');
-
-getComponent().then(component => {
-    document.body.appendChild(component);
-});
+const root = createRoot(document.getElementById('root'));
+root.render(<Demo />);

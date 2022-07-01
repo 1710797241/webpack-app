@@ -8,10 +8,7 @@ const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin');
 const FastRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin/lib');
 const smp = new SpeedMeasureWebpackPlugin();
 console.log('process.env.NODE_ENV', process.env.NODE_ENV);
-const handler = (percentage, message, ...args) => {
-    // e.g. Output each progress message directly to the console:
-    console.info(percentage, message, ...args);
-};
+const handler = (percentage, message, ...args) => {};
 
 const webpack = require('webpack');
 const config = {
@@ -87,7 +84,8 @@ const config = {
             template: 'public/index.html',
         }),
         new WebpackManifestPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
+        new SpeedMeasureWebpackPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
             _: 'lodash',
         }),
@@ -105,6 +103,19 @@ const config = {
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
                 type: 'asset/resource',
+            },
+            {
+                test: /\.(js|jsx)$/i,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: [
+                            ['@babel/preset-env', { targets: 'defaults' }],
+                            ['@babel/preset-react'],
+                        ],
+                    },
+                },
             },
         ],
     },
