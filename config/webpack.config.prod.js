@@ -1,7 +1,5 @@
 const path = require('path');
 
-console.log('process.env.NODE_ENV', process.env.NODE_ENV);
-
 const common = require('./webpack.config.common');
 const { merge } = require('webpack-merge');
 module.exports = merge(common, {
@@ -11,9 +9,11 @@ module.exports = merge(common, {
 
         clean: true, //  new CleanWebpackPlugin()功能一样
         // filename: '[name].bundle.js',
-        filename: '[name].[contenthash].js', //hash 避免浏览器缓存
+        filename: '[name].[contenthash:8].js', //hash 避免浏览器缓存
         // filename: 'webpack-numbers.js',
-        publicPath: '/web',
+        chunkFilename: '[name].[contenthash:8].async.js',
+        assetModuleFilename: '[name].[hash:8][ext]',
+        publicPath: '/',
         // library: {
         //     name: 'webpackNumbers',
         //     type: 'umd',

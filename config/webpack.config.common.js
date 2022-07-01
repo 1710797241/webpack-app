@@ -7,7 +7,7 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin');
 const FastRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin/lib');
 const smp = new SpeedMeasureWebpackPlugin();
-console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+
 const handler = (percentage, message, ...args) => {};
 
 const webpack = require('webpack');
@@ -32,7 +32,9 @@ const config = {
     devServer: {
         static: '../dist',
     },
-
+    resolve: {
+        extensions: ['.js', '.jsx'],
+    },
     optimization: {
         // moduleIds: 'deterministic',//固定vendors的id
         sideEffects: true, //treeshaking
@@ -94,7 +96,20 @@ const config = {
         rules: [
             {
                 test: /\.css$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            modules: {
+                                mode: 'local',
+                                localIdentName: '[local]___[hash:base64:5]',
+                            },
+                        },
+                    },
+                    'postcss-loader',
+                ],
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
