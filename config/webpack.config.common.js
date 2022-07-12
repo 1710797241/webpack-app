@@ -7,14 +7,14 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const SpeedMeasureWebpackPlugin = require('speed-measure-webpack-plugin');
 const FastRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin/lib');
 const smp = new SpeedMeasureWebpackPlugin();
-
+const HP = require('./plugin/index');
 const handler = (percentage, message, ...args) => {};
 
 const webpack = require('webpack');
 const config = {
     entry: {
         index: './src/index.js',
-        mobile: './src/mobile.js',
+        mobile: './src/mobile.js'
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -23,17 +23,22 @@ const config = {
         // filename: '[name].bundle.js',
         filename: '[name].[contenthash].js', //hash 避免浏览器缓存
         // filename: 'webpack-numbers.js',
-        publicPath: '/',
+        publicPath: '/'
         // library: {
         //     name: 'webpackNumbers',
         //     type: 'umd',
         // },
     },
+    stats: {
+        logging: 'none',
+        loggingDebug: false,
+        loggingTrace: false
+    },
     devServer: {
-        static: '../dist',
+        static: '../dist'
     },
     resolve: {
-        extensions: ['.js', '.jsx'],
+        extensions: ['.js', '.jsx']
     },
     optimization: {
         // moduleIds: 'deterministic',//固定vendors的id
@@ -61,10 +66,10 @@ const config = {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendors',
-                    chunks: 'all',
-                },
-            },
-        },
+                    chunks: 'all'
+                }
+            }
+        }
     },
     plugins: [
         //     // new BundleAnalyzerPlugin(),
@@ -77,20 +82,21 @@ const config = {
             filename: 'index.html',
             title: 'index template',
             favicon: 'public/favicon.svg',
-            template: 'public/index.html',
+            template: 'public/index.html'
         }),
         new HtmlWebpackPlugin({
             chunks: ['mobile'],
             filename: 'mobile.html',
             title: 'mobile template',
-            template: 'public/index.html',
+            template: 'public/index.html'
         }),
         new WebpackManifestPlugin(),
         new SpeedMeasureWebpackPlugin(),
         // new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
-            _: 'lodash',
+            _: 'lodash'
         }),
+        new HP()
     ],
     module: {
         rules: [
@@ -104,36 +110,44 @@ const config = {
                             importLoaders: 1,
                             modules: {
                                 mode: 'local',
-                                localIdentName: '[local]___[hash:base64:5]',
-                            },
-                        },
+                                localIdentName: '[local]___[hash:base64:5]'
+                            }
+                        }
                     },
-                    'postcss-loader',
-                ],
+                    'postcss-loader'
+                ]
             },
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
-                type: 'asset/resource',
+                type: 'asset/resource'
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
-                type: 'asset/resource',
+                type: 'asset/resource'
             },
             {
                 test: /\.(js|jsx)$/i,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [
-                            ['@babel/preset-env', { targets: 'defaults' }],
-                            ['@babel/preset-react'],
-                        ],
-                    },
-                },
-            },
-        ],
-    },
+                loader: 'esbuild-loader',
+                options: {
+                    loader: 'jsx', // Remove this if you're not using JSX
+                    target: 'es2015' // Syntax to compile to (see options below for possible values)
+                }
+            }
+            // {
+            //     test: /\.(js|jsx)$/i,
+            //     exclude: /node_modules/,
+            //     use: {
+            //         loader: 'babel-loader',
+            //         options: {
+            //             presets: [
+            //                 ['@babel/preset-env', { targets: 'defaults' }],
+            //                 ['@babel/preset-react']
+            //             ]
+            //         }
+            //     }
+            // }
+        ]
+    }
 };
 
 module.exports = config;

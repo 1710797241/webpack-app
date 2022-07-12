@@ -10,7 +10,7 @@ const PageA = loadable(() => import('./pageA'));
 const Demo = props => {
     const navgate = useNavigate();
     return (
-        <div>
+        <div className="text-blue-600">
             react
             <button
                 onClick={() => {

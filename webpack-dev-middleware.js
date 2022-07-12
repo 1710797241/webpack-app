@@ -1,10 +1,23 @@
 const express = require('express');
 const webpack = require('webpack');
+const {
+    choosePort,
+    createCompiler,
+    prepareProxy,
+    prepareUrls,
+} = require('react-dev-utils/WebpackDevServerUtils');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 
 const app = express();
 const config = require('./config/webpack.config.dev.js');
-const compiler = webpack(config);
+const compiler = createCompiler({
+    appName: 'app',
+    config,
+    urls: {},
+    useYarn: false,
+    useTypeScript: false,
+    webpack,
+});
 
 function addHooks(compiler) {
     compiler.hooks.invalid.tap('server', () => {
@@ -28,6 +41,7 @@ function addHooks(compiler) {
 // );
 // Tell express to use the webpack-dev-middleware and use the webpack.config.js
 // configuration file as a base.
+
 app.use(
     webpackDevMiddleware(compiler, {
         publicPath: config.output.publicPath,
